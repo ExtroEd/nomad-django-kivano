@@ -1,7 +1,10 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets, JSONRenderer
+from .filters import ProductFilter
 from .models import Product
 from .serializers import ProductSerializer
 from django.http import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 class ProductListCreateView(generics.ListCreateAPIView):
@@ -16,3 +19,13 @@ class ProductRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 def home(request):
     return HttpResponse("Добро пожаловать на главную страницу!")
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    renderer_classes = [JSONRenderer]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    filterset_class = ProductFilter
+    search_fields = ['name', 'description', 'category']
+    ordering_fields = ['price', 'name']

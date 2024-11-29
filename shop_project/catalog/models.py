@@ -1,6 +1,4 @@
-from itertools import product
-
-from django.db import models
+from django.db import models, transaction
 
 
 class Product(models.Model):
@@ -32,12 +30,16 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.article:
-            last_product = Product.objects.all().order_by('article').last()
-            if last_product:
-                last_article = int(last_product.article)
-                self.article = str(last_article + 1).zfill(6)
-            else:
-                self.article = '10000'
+            with (transaction.atomic()):
+                last_product = Product.objects.all().order_by('article').last()
+                if last_product:
+                    last_article = int(last_product.article)
+                    self.article = str(last_article + 1).zfill(6)
+                else:
+                    self.article = '1'
+
+                while Product.objects.filter(article=self.article).exists():
+                    self.article = str(int(self.article) + 1).zfill(6)
         super(Product, self).save(*args, **kwargs)
 
 
