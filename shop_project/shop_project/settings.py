@@ -1,6 +1,7 @@
 from pathlib import Path
 import environ
 import os
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'django_filters',
+    'authentication',
 ]
 
 
@@ -158,8 +160,23 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,  # количество элементов на странице
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 
 MEDIA_URL = '/media/'  # URL для доступа к медиафайлам
 MEDIA_ROOT = BASE_DIR / 'media'  # Папка для хранения загруженных файлов
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),  # Время жизни токена
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Время жизни refresh токена
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+}

@@ -2,6 +2,7 @@ from django.db import models, transaction
 
 
 class Product(models.Model):
+    objects = None
     article = models.CharField(max_length=6, unique=True, editable=False)
     name = models.CharField(max_length=255)
     about = models.TextField(null=True, blank=True)

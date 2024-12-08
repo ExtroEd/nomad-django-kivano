@@ -1,4 +1,5 @@
-from rest_framework import generics, viewsets, JSONRenderer
+from rest_framework import generics, viewsets
+from rest_framework.renderers import JSONRenderer
 from .filters import ProductFilter
 from .models import Product
 from .serializers import ProductSerializer
