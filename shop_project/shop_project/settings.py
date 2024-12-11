@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'authentication',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 
@@ -179,4 +181,15 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # Время жизни refresh токена
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
+}
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'width': 600,
+        'height': 300,
+    },
 }

@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.db import models, transaction
 
 
@@ -15,8 +16,8 @@ class Product(models.Model):
     likes = models.PositiveIntegerField(default=0)
     reviews_count = models.PositiveIntegerField(default=0)
     warranty = models.CharField(max_length=50, default='нет')
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.TextField()
+    price = models.IntegerField()
+    description = RichTextField()
     category = models.CharField(max_length=255)
     free_delivery = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,12 +36,12 @@ class Product(models.Model):
                 last_product = Product.objects.all().order_by('article').last()
                 if last_product:
                     last_article = int(last_product.article)
-                    self.article = str(last_article + 1).zfill(6)
+                    self.article = str(last_article + 1).zfill(5)
                 else:
-                    self.article = '1'
+                    self.article = '10000'
 
                 while Product.objects.filter(article=self.article).exists():
-                    self.article = str(int(self.article) + 1).zfill(6)
+                    self.article = str(int(self.article) + 1).zfill(5)
         super(Product, self).save(*args, **kwargs)
 
 
