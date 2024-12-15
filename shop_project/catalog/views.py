@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.renderers import JSONRenderer
 from .filters import ProductFilter
@@ -19,7 +20,7 @@ class ProductRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 
 def home(request):
-    return HttpResponse("Добро пожаловать на главную страницу!")
+    return render(request, 'home.html')
 
 
 class ProductViewSet(viewsets.ModelViewSet):

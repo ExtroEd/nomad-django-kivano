@@ -5,7 +5,7 @@ from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Инициализация env
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'catalog',
     'drf_yasg',
     'rest_framework',
+    'rest_framework_simplejwt',
     'django_filters',
     'authentication',
     'ckeditor',
@@ -64,9 +65,7 @@ ROOT_URLCONF = 'shop_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            BASE_DIR / 'templates',
-        ],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,7 +139,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Путь к каталогу с вашими статическими файлами
@@ -191,5 +190,20 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'Full',
         'width': 600,
         'height': 300,
+    },
+}
+
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Введите токен в формате Bearer <ваш_токен>",
+        }
     },
 }
