@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 
@@ -127,11 +128,22 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
 
-TIME_ZONE = 'UTC'
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Русский'),
+]
+
+LANGUAGE_CODE = 'en'
+
+TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -157,10 +169,11 @@ USE_UNICODE = True
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,  # количество элементов на странице
+    'PAGE_SIZE': 10,
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',

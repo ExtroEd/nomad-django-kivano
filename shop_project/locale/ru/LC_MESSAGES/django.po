@@ -1,0 +1,157 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-25 22:08+0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\authentication\swagger.py:10
+msgid "Enter the token in the format: Bearer <your_token>"
+msgstr "Введите токен в формате: Bearer <ваш_токен>"
+
+#: .\authentication\swagger.py:16
+msgid "API Documentation"
+msgstr "Документация API"
+
+#: .\authentication\swagger.py:18
+msgid "API for online store Kivano"
+msgstr "API для интернет-магазина Kivano"
+
+#: .\authentication\swagger.py:21
+msgid "BSD License"
+msgstr "Лицензия BSD"
+
+#: .\catalog\admin.py:63
+msgid "Описание"
+msgstr "Описание"
+
+#: .\catalog\admin.py:66
+msgid "Дополнительные данные"
+msgstr "Дополнительные данные"
+
+#: .\catalog\admin.py:69
+msgid "Даты"
+msgstr "Даты"
+
+#: .\catalog\apps.py:8
+msgid "Catalog"
+msgstr "Каталог"
+
+#: .\catalog\models.py:8
+msgid "Article"
+msgstr "Артикул"
+
+#: .\catalog\models.py:12 .\catalog\models.py:69
+msgid "Name"
+msgstr "Название"
+
+#: .\catalog\models.py:13
+msgid "About"
+msgstr "О товаре"
+
+#: .\catalog\models.py:16
+msgid "In stock"
+msgstr "На складе"
+
+#: .\catalog\models.py:17 .\catalog\models.py:23
+msgid "Check availability"
+msgstr "Уточняйте наличие"
+
+#: .\catalog\models.py:20
+msgid "Availability"
+msgstr "Наличие"
+
+#: .\catalog\models.py:25
+msgid "Likes"
+msgstr "Лайки"
+
+#: .\catalog\models.py:26
+msgid "Reviews count"
+msgstr "Количество отзывов"
+
+#: .\catalog\models.py:28
+msgid "Warranty"
+msgstr "Гарантия"
+
+#: .\catalog\models.py:32
+msgid "Price"
+msgstr "Цена"
+
+#: .\catalog\models.py:33
+msgid "Description"
+msgstr "Описание"
+
+#: .\catalog\models.py:34
+msgid "Category"
+msgstr "Категория"
+
+#: .\catalog\models.py:35
+msgid "Free delivery"
+msgstr "Бесплатная доставка"
+
+#: .\catalog\models.py:36
+msgid "Created at"
+msgstr "Дата создания"
+
+#: .\catalog\models.py:37
+msgid "Updated at"
+msgstr "Дата обновления"
+
+#: .\catalog\models.py:43
+msgid "Free delivery within a day"
+msgstr "Бесплатная доставка в течение дня"
+
+#: .\catalog\models.py:60
+msgid "Product"
+msgstr "Продукт"
+
+#: .\catalog\models.py:61
+msgid "Products"
+msgstr "Продукты"
+
+#: .\catalog\models.py:70
+msgid "Comment"
+msgstr "Комментарий"
+
+#: .\catalog\models.py:77
+msgid "Review"
+msgstr "Отзыв"
+
+#: .\catalog\models.py:78
+msgid "Reviews"
+msgstr "Отзывы"
+
+#: .\templates\home.html:7
+msgid ""
+"Online Store Kivano.kg, Bishkek, Kyrgyzstan — low prices with free delivery "
+"within a day"
+msgstr ""
+"Интернет-магазин Kivano.kg, Бишкек, Кыргызстан — низкие цены на товары с "
+"бесплатной доставкой в течении дня"
+
+#: .\templates\home.html:20
+msgid "Welcome to our website!"
+msgstr "Добро пожаловать на наш сайт!"
+
+#: .\templates\home.html:21
+msgid "Go to Swagger Documentation"
+msgstr "Перейти к документации Swagger"
+
+#: .\templates\home.html:22
+msgid "Go to Admin Panel"
+msgstr "Перейти в панель администратора"

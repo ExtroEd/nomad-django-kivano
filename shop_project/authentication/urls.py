@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import (TokenObtainPairViewCustom, TokenRefreshViewCustom,
                     ProtectedView)
+from . import views
+
 
 urlpatterns = [
     # Эндпоинты для JWT

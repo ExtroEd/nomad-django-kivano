@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    {% block extrastyle %}{{ block.super }}{% endblock %}
+</head>
+<body>
+    {% block nav-global %}
+        {{ block.super }}
+        <div style="padding: 1rem; text-align: right;">
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <select name="language" onchange="this.form.submit()">
+                    <option value="en" {% if LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                    <option value="ru" {% if LANGUAGE_CODE == 'ru' %}selected{% endif %}>Русский</option>
+                </select>
+            </form>
+        </div>
+    {% endblock %}
+</body>
+</html>

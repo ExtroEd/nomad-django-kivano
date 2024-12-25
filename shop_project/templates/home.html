@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html lang="ru">
+{% load i18n %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интернет-магазин Kivano.kg, Бишкек, Кыргызстан — низкие цены на товары с бесплатной доставкой в течении дня</title>
+    <title>{% trans "Online Store Kivano.kg, Bishkek, Kyrgyzstan — low prices with free delivery within a day" %}</title>
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
-    <h1>Добро пожаловать на главную страницу!</h1>
-    <p><a href="/swagger/" target="_blank">Перейти к Swagger документации</a></p>
-    <p><a href="/admin/" target="_blank">Перейти в админку</a></p>
+    <div class="language-switcher">
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" name="language" value="en" {% if LANGUAGE_CODE == 'en' %}disabled{% endif %}>English</button>
+            <button type="submit" name="language" value="ru" {% if LANGUAGE_CODE == 'ru' %}disabled{% endif %}>Русский</button>
+        </form>
+    </div>
+
+    <h1>{% trans "Welcome to our website!" %}</h1>
+    <p><a href="/swagger/" target="_blank">{% trans "Go to Swagger Documentation" %}</a></p>
+    <p><a href="/admin/" target="_blank">{% trans "Go to Admin Panel" %}</a></p>
 </body>
 </html>

@@ -32,6 +32,12 @@ python manage.py createsuperuser
 # Запустить сервер разработки Django
 python manage.py runserver
 
+# После изменений нужно сгенерировать файлы переводов:
+python manage.py makemessages -l ru
+
+# Компилируйте переводы:
+python manage.py compilemessages
+
 Работа с Git
 
 # Добавить изменения в индекс (все файлы в текущей папке)

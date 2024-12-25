@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.utils import swagger_auto_schema
+from django.shortcuts import render
 
 
 class TokenObtainPairViewCustom(TokenObtainPairView):
