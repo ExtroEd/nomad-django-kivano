@@ -63,3 +63,26 @@ git push origin main --force
 
 # Получить последние изменения из удалённого репозитория
 git pull origin main
+
+Docker
+
+# Остановка контейнеров:
+docker-compose down
+
+# Запуск контейнеров:
+docker-compose up -d
+
+# Сборка или пересборка контейнеров:
+docker-compose build
+
+# Просмотр логов:
+docker-compose logs
+
+# Или логи конкретного сервиса:
+docker-compose logs web
+
+# Открытие shell внутри контейнера:
+docker exec -it <container_name> /bin/bash
+
+# Просмотр запущенных контейнеров:
+docker ps
