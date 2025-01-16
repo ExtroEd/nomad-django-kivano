@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import Product, Review
+from .models import Product, Category, SubCategory, SubSubCategory, Review
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 
 class ProductForm(forms.ModelForm):
@@ -12,6 +13,24 @@ class ProductForm(forms.ModelForm):
         widgets = {
             'description': CKEditorWidget(),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        # category = cleaned_data.get('category')
+        # subcategory = cleaned_data.get('subcategory')
+        # subsubcategory = cleaned_data.get('subsubcategory')
+        #
+        # if subcategory and subcategory.category != category:
+        #     raise ValidationError({
+        #         'subcategory': _('Выбранная подкатегория не соответствует категории.'),
+        #     })
+        #
+        # if subsubcategory and subsubcategory.subcategory != subcategory:
+        #     raise ValidationError({
+        #         'subsubcategory': _('Выбранная под-подкатегория не соответствует подкатегории.'),
+        #     })
+
+        return cleaned_data
 
 
 @admin.register(Product)
@@ -27,6 +46,9 @@ class ProductAdmin(admin.ModelAdmin):
         'free_delivery',
         'description',
         'article',
+        'category',
+        'subcategory',
+        'subsubcategory',
         'created_at',
         'warranty',
     )
@@ -34,11 +56,16 @@ class ProductAdmin(admin.ModelAdmin):
         'availability',
         'free_delivery',
         'category',
+        'subcategory',
+        'subsubcategory',
+        'created_at',
     )
     search_fields = (
         'name',
         'article',
-        'category',
+        'category__name',
+        'subcategory__name',
+        'subsubcategory__name',
     )
     ordering = ('-created_at',)
     readonly_fields = (
@@ -47,8 +74,6 @@ class ProductAdmin(admin.ModelAdmin):
         'updated_at',
         'article',
     )
-
-    # Локализация заголовков секций
     fieldsets = (
         (None, {
             'fields': (
@@ -57,6 +82,8 @@ class ProductAdmin(admin.ModelAdmin):
                 'price',
                 'availability',
                 'category',
+                'subcategory',
+                'subsubcategory',
                 'free_delivery',
             ),
         }),
@@ -70,17 +97,53 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('created_at', 'updated_at'),
         }),
     )
-    filter_horizontal = ()
     list_editable = (
         'price',
         'availability',
-        'name',
-        'about',
-        'description',
-        'warranty',
         'free_delivery',
     )
     date_hierarchy = 'created_at'
+
+    class Media:
+        js = ('admin/js/category_filter.js',)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        obj = getattr(request, 'obj', None)
+
+        if db_field.name == 'subcategory':
+            if obj and obj.category:
+                kwargs['queryset'] = SubCategory.objects.filter(
+                    category=obj.category)
+            else:
+                kwargs[
+                    'queryset'] = SubCategory.objects.all()  # Возвращаем все подкатегории, если категория не выбрана
+
+        if db_field.name == 'subsubcategory':
+            if obj and obj.subcategory:
+                kwargs['queryset'] = SubSubCategory.objects.filter(
+                    subcategory=obj.subcategory)
+            else:
+                kwargs[
+                    'queryset'] = SubSubCategory.objects.all()  # Возвращаем все под-подкатегории, если подкатегория не выбрана
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+
+@admin.register(SubCategory)
+class SubCategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'category')
+    list_filter = ('category',)
+
+
+@admin.register(SubSubCategory)
+class SubSubCategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'subcategory')
+    list_filter = ('subcategory',)
 
 
 @admin.register(Review)

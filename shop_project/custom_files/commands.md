@@ -1,4 +1,4 @@
-Установка проекта и подготовка окружения
+# Установка проекта и подготовка окружения
 
 # Клонировать репозиторий на локальную машину
 git clone <URL_репозитория>
@@ -18,7 +18,7 @@ python -m pip install --upgrade pip
 # Установить зависимости из файла requirements.txt
 pip install -r requirements.txt
 
-Подготовка базы данных и создание администратора
+# Подготовка базы данных и создание администратора
 
 # Подготовить миграции для изменений в моделях
 python manage.py makemigrations
@@ -32,13 +32,7 @@ python manage.py createsuperuser
 # Запустить сервер разработки Django
 python manage.py runserver
 
-# После изменений нужно сгенерировать файлы переводов:
-python manage.py makemessages -l ru
-
-# Компилируйте переводы:
-python manage.py compilemessages
-
-Работа с Git
+# Работа с Git
 
 # Добавить изменения в индекс (все файлы в текущей папке)
 git add .
@@ -49,22 +43,7 @@ git commit -m "Описание изменений"
 # Отправить изменения в удалённый репозиторий (на основную ветку)
 git push origin main
 
-# Добавить новый удалённый репозиторий (если ещё не добавлен)
-git remote add origin <URL_репозитория>
-
-# Изменить URL существующего удалённого репозитория
-git remote set-url origin <URL_репозитория>
-
-# Проверить URL текущего удалённого репозитория
-git remote -v
-
-# Принудительно отправить изменения в удалённый репозиторий (перезаписать)
-git push origin main --force
-
-# Получить последние изменения из удалённого репозитория
-git pull origin main
-
-Docker
+# Docker
 
 # Остановка контейнеров:
 docker-compose down
@@ -86,3 +65,9 @@ docker exec -it <container_name> /bin/bash
 
 # Просмотр запущенных контейнеров:
 docker ps
+
+# Команда для создания супеюзера:
+docker exec -it <имя_контейнера> python manage.py createsuperuser
+docker exec -it shop_project-web-1 python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('root', 'admin@example.com', 'root')"
+
+psql -U postgres

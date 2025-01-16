@@ -1,0 +1,28 @@
+# Обработка текстовых файлов
+# Принудительно устанавливаем окончания строк в CRLF для Windows
+* text=auto eol=crlf
+
+# Python файлы, JSON и конфигурации должны использовать LF, так как это стандарт в разработке
+*.py text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+
+# Окончания строк для Windows-скриптов (например, .bat)
+*.bat text eol=crlf
+
+# Бинарные файлы: Git не будет менять их окончания строк
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.exe binary
+*.dll binary
+
+# Игнорируем изменения в LF/CRLF для requirements.txt, если хотите оставить как есть
+requirements.txt -text

@@ -7,8 +7,10 @@
     <title>{% trans "Online Store Kivano.kg, Bishkek, Kyrgyzstan — low prices with free delivery within a day" %}</title>
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
+    <!-- Языковой переключатель -->
     <div class="language-switcher">
         <form action="{% url 'set_language' %}" method="post">
             {% csrf_token %}
@@ -17,8 +19,31 @@
         </form>
     </div>
 
-    <h1>{% trans "Welcome to our website!" %}</h1>
-    <p><a href="/swagger/" target="_blank">{% trans "Go to Swagger Documentation" %}</a></p>
-    <p><a href="/admin/" target="_blank">{% trans "Go to Admin Panel" %}</a></p>
+    <!-- Шапка -->
+    <div class="header">
+        <h1>{% trans "Online Store Kivano.kg" %}</h1>
+    </div>
+
+    <!-- Боковое меню -->
+    <div class="sidebar">
+        <ul>
+            <li><a href="#">{% trans "Home" %}</a></li>
+            <li><a href="#">{% trans "Products" %}</a></li>
+            <li><a href="#">{% trans "About Us" %}</a></li>
+            <li><a href="#">{% trans "Contact" %}</a></li>
+        </ul>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="main-content">
+        <h1>{% trans "Welcome to our website!" %}</h1>
+        <p><a href="/swagger/" target="_blank">{% trans "Go to Swagger Documentation" %}</a></p>
+        <p><a href="/admin/" target="_blank">{% trans "Go to Admin Panel" %}</a></p>
+    </div>
+
+    <!-- Футер -->
+    <div class="footer">
+        <p>{% trans "© 2025 Kivano.kg. All rights reserved." %}</p>
+    </div>
 </body>
 </html>
