@@ -1,6 +1,9 @@
 from django.db import models
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from apps.catalog.models import Product
+
 
 class Review(models.Model):
     product = models.ForeignKey(
@@ -18,3 +21,12 @@ class Review(models.Model):
     class Meta:
         verbose_name = _("Review")
         verbose_name_plural = _("Reviews")
+
+
+@receiver(post_save, sender=Review)
+@receiver(post_delete, sender=Review)
+def update_reviews_count(sender, instance, **kwargs):
+    """Обновляет количество отзывов в продукте."""
+    product = instance.product
+    product.reviews_count = product.reviews.count()
+    product.save()

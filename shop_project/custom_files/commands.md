@@ -70,7 +70,19 @@ docker exec -it <container_name> /bin/bash
 docker ps
 
 # Команда для создания супеюзера:
-docker exec -it <имя_контейнера> python manage.py createsuperuser
-docker exec -it shop_project-web-1 python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('root', 'admin@example.com', 'root')"
+docker exec -it shop_project-web-1 python manage.py shell
 
-psql -U postgres
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
+user = User.objects.create_superuser('string', 'admin@example.com', 'string')
+print("Superuser created successfully")
+
+# Открытие SQL
+psql -U electromanixbe kivano
+
+# Сканирование проекта на наличие строк для перевода
+python manage.py makemessages -l ru
+
+# Компилирование переводов
+python manage.py compilemessages

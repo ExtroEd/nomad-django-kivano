@@ -1,7 +1,7 @@
 from ckeditor.fields import RichTextField
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -134,9 +134,8 @@ class Product(models.Model):
 
 
 class ProductLike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, related_name='likes_set',
-                                on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='likes_set', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -144,3 +143,5 @@ class ProductLike(models.Model):
 
     def __str__(self):
         return f"{self.user} likes {self.product}"
+
+

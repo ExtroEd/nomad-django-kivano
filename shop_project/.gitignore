@@ -21,3 +21,9 @@ staticfiles/
 
 docker-compose.override.yml
 *.log
+
+# Игнорировать все миграции
+**/migrations/*
+
+# Исключение для __init__.py
+!**/migrations/__init__.py

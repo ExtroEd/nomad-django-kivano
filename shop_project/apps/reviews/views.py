@@ -1,15 +1,16 @@
 import logging
-
 import requests
 from django.conf import settings
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from .models import Review
 from .serializers import ReviewSerializer
 
+
 logger = logging.getLogger(__name__)
+
 
 def verify_recaptcha(recaptcha_response):
     recaptcha_verify_url = 'https://www.google.com/recaptcha/api/siteverify'
@@ -25,31 +26,33 @@ def verify_recaptcha(recaptcha_response):
         logger.error(f"Error during reCAPTCHA verification: {e}")
         return False, None
 
+
+@extend_schema(tags=["Отзывы"])  # Применяем теги ко всему классу
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-    @swagger_auto_schema(tags=["Отзывы"])
+    @extend_schema(description="Получение списка всех отзывов")
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    @swagger_auto_schema(tags=["Отзывы"])
+    @extend_schema(description="Получение отзыва по ID")
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
-    @swagger_auto_schema(tags=["Отзывы"])
+    @extend_schema(description="Обновление отзыва")
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
-    @swagger_auto_schema(tags=["Отзывы"])
+    @extend_schema(description="Удаление отзыва")
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
 
-    @swagger_auto_schema(tags=["Отзывы"])
+    @extend_schema(description="Частичное обновление отзыва")
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
-    @swagger_auto_schema(tags=["Отзывы"])
+    @extend_schema(description="Создание нового отзыва")
     def create(self, request, *args, **kwargs):
         recaptcha_response = request.data.get('g-recaptcha-response')
         if not recaptcha_response:

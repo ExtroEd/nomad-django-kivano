@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.reviews',
 
     'drf_yasg',
+    'drf_spectacular',
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
@@ -123,16 +124,10 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'OPTIONS': {
+            'min_length': 6,
+        },
     },
 ]
 
@@ -193,6 +188,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
@@ -222,18 +219,6 @@ CKEDITOR_CONFIGS = {
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
-SWAGGER_SETTINGS = {
-    "SECURITY_DEFINITIONS": {
-        "Bearer": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header",
-            "description": "Введите токен в формате Bearer <ваш_токен>",
-        }
-    },
-}
-
-
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1'
@@ -242,3 +227,29 @@ CSRF_TRUSTED_ORIGINS = [
 
 RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')
+
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'API Documentation',
+    'DESCRIPTION': 'Detailed description of the API',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+
+    'SECURITY': [
+        {
+            'Bearer': []
+        }
+    ],
+
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'Введите токен в формате Bearer <ваш_токен>'
+        }
+    }
+}

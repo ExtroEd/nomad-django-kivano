@@ -27,3 +27,7 @@ class ProductLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductLike
         fields = ['user', 'product', 'created_at']
+
+
+class LikeResponseSerializer(serializers.Serializer):
+    detail = serializers.CharField()

@@ -53,6 +53,7 @@ class ProductAdmin(admin.ModelAdmin):
         'created_at',
         'warranty',
         'likes',
+        'reviews_count',
     )
     list_filter = (
         'availability',
@@ -75,6 +76,7 @@ class ProductAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
         'article',
+        'reviews_count',
     )
     fieldsets = (
         (None, {
