@@ -7,7 +7,7 @@ from django.core.management import call_command
 
 class CatalogConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'catalog'
+    name = 'apps.catalog'
     verbose_name = _("Catalog")
 
     def ready(self):

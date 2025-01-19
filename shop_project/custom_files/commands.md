@@ -54,6 +54,9 @@ docker-compose up -d
 # Сборка или пересборка контейнеров:
 docker-compose build
 
+# Сборка и запуск контейнеров
+docker-compose up --build
+
 # Просмотр логов:
 docker-compose logs
 

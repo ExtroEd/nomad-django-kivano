@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Product, Category, SubCategory, SubSubCategory, Review
+from .models import Product, Category, SubCategory, SubSubCategory
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from apps.reviews.models import Review
 
 
 class ProductForm(forms.ModelForm):
@@ -51,6 +52,7 @@ class ProductAdmin(admin.ModelAdmin):
         'subsubcategory',
         'created_at',
         'warranty',
+        'likes',
     )
     list_filter = (
         'availability',
@@ -144,16 +146,3 @@ class SubCategoryAdmin(admin.ModelAdmin):
 class SubSubCategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'subcategory')
     list_filter = ('subcategory',)
-
-
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
-    list_display = (
-        'product',
-        'name',
-        'created_at',
-    )
-    search_fields = (
-        'name',
-        'product__name',
-    )

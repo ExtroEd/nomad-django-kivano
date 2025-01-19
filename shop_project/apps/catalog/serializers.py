@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Product
+
+from .models import Product, ProductLike
 
 
 def validate_article(value):
@@ -20,3 +21,9 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username', 'password', 'email']
+
+
+class ProductLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductLike
+        fields = ['user', 'product', 'created_at']

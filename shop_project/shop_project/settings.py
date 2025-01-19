@@ -38,12 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalog',
+    #apps
+    'apps.catalog',
+    'apps.authentication',
+    'apps.users',
+    'apps.core',
+    'apps.orders',
+    'apps.cart',
+    'apps.reviews',
+
     'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
     'django_filters',
-    'authentication',
     'ckeditor',
     'ckeditor_uploader',
 ]
@@ -231,3 +238,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1'
 ]
+
+
+RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')

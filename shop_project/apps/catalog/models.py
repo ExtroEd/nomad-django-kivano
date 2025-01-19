@@ -1,6 +1,7 @@
 from ckeditor.fields import RichTextField
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -123,24 +124,23 @@ class Product(models.Model):
                 self.article = str(int(self.article) + 1).zfill(5)
         super(Product, self).save(*args, **kwargs)
 
+    def update_likes_count(self):
+        self.likes = self.likes_set.count()
+        self.save()
+
     class Meta:
         verbose_name = _("Product")
         verbose_name_plural = _("Products")
 
 
-class Review(models.Model):
-    product = models.ForeignKey(
-        Product,
-        related_name='Reviews',
-        on_delete=models.CASCADE
-    )
-    name = models.CharField(_("Name"), max_length=255)
-    comment = models.TextField(_("Comment"))
+class ProductLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='likes_set',
+                                on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return f"Review by {self.name} on {self.product.name}"
-
     class Meta:
-        verbose_name = _("Review")
-        verbose_name_plural = _("Reviews")
+        unique_together = ['user', 'product']
+
+    def __str__(self):
+        return f"{self.user} likes {self.product}"
