@@ -14,18 +14,21 @@ class RegisterView(APIView):
     serializer_class = RegistrationSerializer
 
     @extend_schema(
+        summary="Регистрация нового пользователя",
+        description=(
+            "Позволяет зарегистрировать нового пользователя. "
+            "Для регистрации отправьте данные, такие как имя, email и пароль. "
+            "В случае успеха возвращает ID созданного пользователя."
+        ),
         tags=['Пользователи'],
-        description="Регистрация нового пользователя. Для регистрации нового "
-                    "пользователя отправьте необходимые данные (имя, email, "
-                    "пароль) в запросе.",
         request=RegistrationSerializer,
         responses={
             201: OpenApiResponse(
-                description="Регистрация успешна. Возвращается ID нового "
-                            "пользователя."),
+                description="Регистрация успешна. Возвращается ID нового пользователя."
+            ),
             400: OpenApiResponse(
-                description="Некорректные данные. Пожалуйста, убедитесь, что "
-                            "все поля корректны и соответствуют требованиям.")
+                description="Некорректные данные. Проверьте заполненность и корректность полей."
+            )
         }
     )
     def post(self, request):
@@ -44,7 +47,24 @@ class RegisterView(APIView):
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
 
-    @extend_schema(tags=['Пользователи'])
+    @extend_schema(
+        summary="Авторизация пользователя",
+        description=(
+            "Позволяет авторизоваться пользователю с использованием email и "
+            "пароля. Возвращает пару токенов: access и refresh. В случае "
+            "некорректных данных возвращает сообщение об ошибке."
+        ),
+        tags=['Пользователи'],
+        request=LoginSerializer,
+        responses={
+            200: OpenApiResponse(
+                description="Авторизация успешна. Возвращается пара токенов."
+            ),
+            401: OpenApiResponse(
+                description="Ошибка авторизации. Некорректные данные."
+            )
+        }
+    )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
@@ -56,11 +76,19 @@ class UserListView(APIView):
         page_size = 10
 
     @extend_schema(
+        summary="Список пользователей с пагинацией",
+        description=(
+            "Возвращает список пользователей с поддержкой пагинации. Каждая "
+            "страница содержит фиксированное количество записей (по умолчанию "
+            "10). Если пользователей нет, возвращается сообщение с "
+            "соответствующим статусом."
+        ),
         tags=['Пользователи'],
-        description="Получение списка пользователей с пагинацией",
         responses={
             200: CustomUserSerializer(many=True),
-            404: OpenApiResponse(description="Нет пользователей")
+            404: OpenApiResponse(
+                description="Нет пользователей в системе."
+            )
         }
     )
     def get(self, request):

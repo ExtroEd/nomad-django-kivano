@@ -27,32 +27,74 @@ def verify_recaptcha(recaptcha_response):
         return False, None
 
 
-@extend_schema(tags=["Отзывы"])  # Применяем теги ко всему классу
+@extend_schema(tags=["Отзывы"])
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-    @extend_schema(description="Получение списка всех отзывов")
+    @extend_schema(
+        summary="Получить список отзывов",
+        description=(
+            "Возвращает список всех отзывов, хранящихся в базе данных. "
+            "Каждый отзыв включает такие поля, как: `id`, `content`, "
+            "`rating`, `user` (пользователь, оставивший отзыв), и "
+            "`created_at` (дата создания)."
+        )
+    )
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
-    @extend_schema(description="Получение отзыва по ID")
+    @extend_schema(
+        summary="Получить отзыв по ID",
+        description=(
+            "Возвращает подробную информацию о конкретном отзыве по его `id`. "
+            "Если отзыв не найден, возвращается ошибка 404."
+        )
+    )
     def retrieve(self, request, *args, **kwargs):
         return super().retrieve(request, *args, **kwargs)
 
-    @extend_schema(description="Обновление отзыва")
+    @extend_schema(
+        summary="Обновить отзыв",
+        description=(
+            "Полностью обновляет данные существующего отзыва по его `id`. "
+            "Необходимо предоставить все обязательные поля, даже если они не "
+            "изменяются."
+        )
+    )
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
-    @extend_schema(description="Удаление отзыва")
+    @extend_schema(
+        summary="Удалить отзыв",
+        description=(
+            "Удаляет отзыв из базы данных по его `id`. "
+            "Если отзыв не найден, возвращается ошибка 404."
+        )
+    )
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
 
-    @extend_schema(description="Частичное обновление отзыва")
+    @extend_schema(
+        summary="Частично обновить отзыв",
+        description=(
+            "Позволяет обновить только определённые поля существующего отзыва "
+            "по его `id`. Нужно передать только те поля, которые вы хотите "
+            "изменить."
+        )
+    )
     def partial_update(self, request, *args, **kwargs):
         return super().partial_update(request, *args, **kwargs)
 
-    @extend_schema(description="Создание нового отзыва")
+    @extend_schema(
+        summary="Создать новый отзыв",
+        description=(
+            "Создаёт новый отзыв. Параметры отзыва, такие как `content`, "
+            "`rating`, и другие обязательные поля, должны быть предоставлены. "
+            "Требуется проверка reCAPTCHA (`g-recaptcha-response`). Если "
+            "reCAPTCHA недействителен или отсутствует, возвращается ошибка."
+        )
+    )
     def create(self, request, *args, **kwargs):
         recaptcha_response = request.data.get('g-recaptcha-response')
         if not recaptcha_response:

@@ -9,13 +9,48 @@ from django.shortcuts import render
 
 
 class TokenObtainPairViewCustom(TokenObtainPairView):
-    @extend_schema(tags=["Токены"])
+    @extend_schema(
+        summary="Получение токенов доступа",
+        description=(
+            "Позволяет получить пару токенов (access и refresh) для "
+            "авторизации. Требуется отправить валидные учетные данные "
+            "пользователя. Если данные корректны, возвращается пара токенов."
+        ),
+        tags=["Токены"],
+        responses={
+            200: OpenApiResponse(
+                description="Успешная аутентификация. Возвращается пара "
+                            "токенов."
+            ),
+            401: OpenApiResponse(
+                description="Ошибка авторизации. Неверные учетные данные."
+            )
+        }
+    )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
 
 class TokenRefreshViewCustom(TokenRefreshView):
-    @extend_schema(tags=["Токены"])
+    @extend_schema(
+        summary="Обновление токена доступа",
+        description=(
+            "Позволяет обновить токен доступа (access token), используя "
+            "refresh токен. Для этого в запросе необходимо предоставить "
+            "refresh токен. Возвращает новый токен доступа."
+        ),
+        tags=["Токены"],
+        responses={
+            200: OpenApiResponse(
+                description="Успешное обновление. Возвращается новый токен "
+                            "доступа."
+            ),
+            401: OpenApiResponse(
+                description="Ошибка авторизации. Неверный или истекший "
+                            "refresh токен."
+            )
+        }
+    )
     def post(self, request, *args, **kwargs):
         return super().post(request, *args, **kwargs)
 
@@ -24,26 +59,31 @@ class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
+        summary="Доступ к защищенному ресурсу",
+        description=(
+            "Позволяет получить доступ к защищенному ресурсу. Для доступа "
+            "необходимо предоставить валидный токен авторизации в заголовке "
+            "`Authorization` с префиксом `Bearer`."
+        ),
         tags=["Токены"],
-        description="Доступ к защищенному ресурсу. Для доступа к этому "
-                    "эндпоинту, пожалуйста, используйте валидный токен "
-                    "авторизации.",
         parameters=[
             OpenApiParameter(
                 name='Authorization',
                 required=True,
                 type=str,
                 location=OpenApiParameter.HEADER,
-                description="Bearer token for authorization"
+                description="Токен авторизации в формате `Bearer <token>`."
             ),
         ],
         responses={
             200: OpenApiResponse(
-                description="Доступ разрешен. Возвращает сообщение о "
-                            "защищенном ресурсе."),
+                description="Доступ разрешен. Возвращается сообщение о "
+                            "защищенном ресурсе."
+            ),
             401: OpenApiResponse(
-                description="Ошибка авторизации. Пожалуйста, предоставьте "
-                            "действующий токен.")
+                description="Ошибка авторизации. Необходимо предоставить "
+                            "валидный токен."
+            )
         }
     )
     def get(self, request):

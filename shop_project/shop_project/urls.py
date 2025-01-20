@@ -7,6 +7,7 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from apps.catalog import views
+from apps.orders.views import CreateOrderView
 
 
 urlpatterns = [
@@ -14,6 +15,10 @@ urlpatterns = [
     path('api/reviews/', include('apps.reviews.urls')),
     path('api/cart/', include('apps.cart.urls')),
     path('api/users/', include('apps.users.urls')),
+    path('api/orders/', include('apps.orders.urls')),
+
+    # Пути для заказов
+    path('api/orders/create/', CreateOrderView.as_view(), name='create-order'),
 
     # Swagger и схема API
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

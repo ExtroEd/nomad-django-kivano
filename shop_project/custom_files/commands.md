@@ -32,6 +32,9 @@ python manage.py createsuperuser
 # Запустить сервер разработки Django
 python manage.py runserver
 
+# Запустить телеграм бота
+python manage.py startbot
+
 # Работа с Git
 
 # Добавить изменения в индекс (все файлы в текущей папке)
