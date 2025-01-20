@@ -89,3 +89,4 @@ python manage.py makemessages -l ru
 
 # Компилирование переводов
 python manage.py compilemessages
+
